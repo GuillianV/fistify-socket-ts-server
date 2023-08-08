@@ -1,0 +1,26 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      HOST: ${{ secrets.HOST }}
+      USERNAME: ${{ secrets.USERNAME }}
+      PASSWORD: ${{ secrets.PASSWORD }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: SSH and deploy
+      uses: appleboy/ssh-action@master
+      with:
+        username: ${{ secrets.USERNAME }}
+        host: ${{ secrets.HOST }}
+        password: ${{ secrets.PASSWORD }}
+        script: cd /home/guillianv/dev/sveltekit/tac-tic && docker compose down && git pull && docker compose up -d --force-recreate --build

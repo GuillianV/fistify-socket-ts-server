@@ -1,0 +1,15 @@
+version: '3'
+services:
+  socket-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - PORT:${PORT}
+    networks:
+      - socket-server-net
+    ports:
+      - "${PORT}:${PORT}"
+networks:
+  socket-server-net:
+   external: true
