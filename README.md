@@ -10,17 +10,17 @@ install dependencies with `npm install` , start a development server:
 # or enable hot reload with nodemon
 npm run start:dev
 
-
-
 ```
 
 ## Building
 
 To create a production version of your app:
 
-```bash
-# start the server with build for production
-npm run start
-```
+* Setup .env file with PORT property
+
+* Update CI-CD if forking on git-hub
+
+* Docker compose for deploying ( Carefull : create network before and expose ports only if needed)
+
 
 
