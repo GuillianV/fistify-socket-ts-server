@@ -1,24 +1,39 @@
 
 import Browser from '../browser/browser'
 import Browsers from '../browser/browsers'
-import { Server } from 'socket.io'
-
+import { Server, Socket } from 'socket.io'
+import { browserLogger } from '../../logs/pino'
 
 export default class ServerSocketManager{
 
     io:Server
     browsers : Browsers
+    sockets : Array<Socket>
 
     constructor(io:Server){
 
         this.io = io
+        this.sockets = []
         this.browsers = new Browsers()
         this.startup()
-       
+        this.setBrowser()
+    }
+    setBrowser(){
+
     }
 
-
     startup(){
+
+      
+
+      this.io.on('connection', (socket:Socket) => {
+        this.sockets.push(socket)
+        socket.on('disconnect', () => {
+          const index = this.sockets.indexOf(socket)
+          this.sockets.splice(index,1)
+        });
+      });
+
 
       this.io.on('connection', (socket) => {
 
@@ -31,8 +46,8 @@ export default class ServerSocketManager{
             this.browsers.setBrowser(browser)
             callback(data)
 
-          }catch(exception){
-            
+          }catch(exception:any){
+            browserLogger.error("on:browser-identify-response "+exception.message)
           }
         })
       })

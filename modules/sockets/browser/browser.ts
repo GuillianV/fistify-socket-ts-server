@@ -1,4 +1,4 @@
-
+import { browserLogger } from "../../logs/pino"
 export default class Browser{
 
     socketId:string
@@ -8,13 +8,13 @@ export default class Browser{
 
         if(socketId.length == 0){
 
-          //  socketLogger.error('socketId length == 0')
+            browserLogger.error('socketId length == 0')
             throw new Error('socketId length == 0')
         }
            
         if(browserId.length == 0){
 
-            //socketLogger.error('browserId length == 0')
+            browserLogger.error('browserId length == 0')
             throw new Error('browserId length == 0')
         }
    
